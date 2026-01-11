@@ -1,1 +1,60 @@
-.
+local repo = "https://raw.githubusercontent.com/deividcomsono/Obsidian/main/"
+local Library = loadstring(game:HttpGet(repo .. "Library.lua"))()
+
+local correctKey = "MiniHub2026" -- Key users must enter
+
+-- Create main window
+local Window = Library:CreateWindow({
+    Title = "Mini Hub",
+    Footer = "Only Have To Enter The Key Once!",
+    ToggleKeybind = Enum.KeyCode.RightControl,
+    Center = true,
+    AutoShow = true,
+    Resizable = false,
+    Size = UDim2.fromOffset(700, 500)
+})
+
+-- Only Key System tab
+local KeyTab = Window:AddKeyTab("Key System")
+
+-- Key Tab Label (Bold using RichText)
+KeyTab:AddLabel({
+    Text = "<b>Enter your Mini Hub key below.</b>\n<b>Get the key from our Discord: https://discord.gg/5WDxBVtTyV</b>",
+    DoesWrap = true,
+    Size = 18
+})
+
+-- KeyBox for entering the key
+KeyTab:AddKeyBox(function(ReceivedKey)
+    if ReceivedKey == correctKey then
+        Library:Notify({
+            Title = "<b>Correct Key!</b>",
+            Description = "<b>You have entered the correct key! Loading Mini Hub...</b>",
+            Time = 4
+        })
+        -- Load your main hub script here
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/xluski/Mini-Hub--NFL-Universal-FootBall/refs/heads/main/Obfuscated"))()
+        -- Optionally unload the key tab after success
+        Library:Unload()
+    else
+        Library:Notify({
+            Title = "<b>Incorrect Key!</b>",
+            Description = "<b>The key you entered is invalid! Get it from our Discord: https://discord.gg/5WDxBVtTyV</b>",
+            Time = 5
+        })
+    end
+end)
+
+-- Add Copy Discord button directly in Key Tab
+KeyTab:AddButton({
+    Text = "<b>Copy Discord Link</b>",
+    Func = function()
+        setclipboard("https://discord.gg/5WDxBVtTyV")
+        Library:Notify({
+            Title = "<b>Copied!</b>",
+            Description = "<b>Discord link copied to clipboard!</b>",
+            Time = 3
+        })
+    end,
+    DoubleClick = false
+})
